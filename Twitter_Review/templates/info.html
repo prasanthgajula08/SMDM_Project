@@ -5,11 +5,13 @@
     <form action="info" method="post" class="row g-2">
         {% csrf_token %}
         <div class="col-auto">
-          <input type="text" class="form-control" name="searchValue" placeholder="Search Movies/TV shows">
+        <input type="text" class="form-control" name="searchValue" placeholder="Search Movies/TV shows">
         </div>
         <div class="col-auto">
-          <button type="submit" class="btn btn-dark">Search</button>
+        <button type="submit" class="btn btn-dark">Search</button>
         </div>
     </form>
+
+    Title of webpage: {{title}}
 
 {% endblock %}
