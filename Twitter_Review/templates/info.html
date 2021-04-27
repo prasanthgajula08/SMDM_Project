@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
     <form action="info" method="post" class="row g-2">
         {% csrf_token %}
         <div class="col-auto">
@@ -13,5 +12,6 @@
     </form>
 
     Title of webpage: {{title}}
+    <img src="{{ image }}" alt="poster">
 
 {% endblock %}
