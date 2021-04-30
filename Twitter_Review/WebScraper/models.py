@@ -9,3 +9,5 @@ class Movie:
     genre: str
     cnc: list
     wtw: str
+    won: str
+    trailer: str

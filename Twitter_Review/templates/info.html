@@ -9,36 +9,61 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Twitter Review</title>
+    <style>
+        body {
+            width:100vw; 
+            height: 500px; 
+            background-color: rgba(0, 0, 0, 0.6);
+            background-image: url('static/images/pic1.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+    </style>
 </head>
 
 <body>
-    <form action="info" method="post" class="row g-2">
-        {% csrf_token %}
-        <div class="col-auto">
-            <input type="text" class="form-control" name="searchValue" placeholder="Search Movies/TV shows">
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand">People's Review</a>
+            <form action="info" method="post" class="d-flex">
+                {% csrf_token %}
+                <input class="form-control me-2" type="search" name="searchValue" placeholder="Search"
+                    aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
         </div>
-        <div class="col-auto">
-            <button type="submit" class="btn btn-dark">Search</button>
+    </nav>
+    <br><br><br><br><br>
+    <div class="row justify-content-center">
+        <div class="col-2">
+            <div class="card" style="width: 18rem;">
+                <img src="{% static 'images/pic1.jpg' %}" class="card-img-top" alt="poster">
+            </div>
         </div>
-    </form>
-
-    Title of webpage: {{movie.title}}
-    <br>
-    Poster: <img src="{% static 'images/pic1.jpg' %}" alt="poster">
-    <br>
-    IMDB_rating: {{movie.imdb}}
-    <br>
-    Description: {{movie.desc}}
-    <br>
-    Genre: {{movie.genre}}
-    <br>
-    Cast & Crew:
-    {% for i in movie.cnc %}
-    {{i}},
-    {% endfor %}
-    and others.
-    <!--<br>
-    Where to watch?: {{movie.wtw}}-->
+        <div class="col-4">
+            <div class="card" style="width: 50rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{movie.title}}</h5>
+                    <p class="card-text">Description: {{movie.desc}}</p>
+                    <a href="https://www.imdb.com/" class="btn btn-primary">IMDB_rating: {{movie.imdb}}</a>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Genre: {{movie.genre}}</li>
+                    <li class="list-group-item">Cast & Crew:
+                        {% for i in movie.cnc %}
+                        {{i}},
+                        {% endfor %}
+                        and others.</li>
+                    <li class="list-group-item">Where to watch?: {{movie.wtw}}</li>
+                    <li class="list-group-item">Should you watch?: {{movie.won}}</li>
+                    <li class="list-group-item">Trailer: <a href="{{movie.trailer}}" class="link-primary">{{movie.trailer}}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

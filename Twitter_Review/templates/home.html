@@ -2,14 +2,15 @@
 
 {% block content %}
 
-    <form action="info" method="post" class="row g-2">
-        {% csrf_token %}
-        <div class="col-auto">
-          <input type="text" class="form-control" name="searchValue" placeholder="Search Movies/TV shows">
-        </div>
-        <div class="col-auto">
-          <button type="submit" class="btn btn-dark">Search</button>
-        </div>
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand">People's Review</a>
+    <form action="info" method="post" class="d-flex">
+      {% csrf_token %}
+      <input class="form-control me-2" type="search" name="searchValue" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
+  </div>
+</nav>
 
 {% endblock %}
