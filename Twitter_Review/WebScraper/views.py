@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from .models import Movie
 import requests
 import bs4
+import pandas as pd
+import os
+import snscrape.modules.twitter as sntwitter
 # Create your views here.
 
 
@@ -73,7 +76,23 @@ def fetchData(request):
     else:
         movie.trailer = "NA"
 
-    tweets = ['https://twitter.com/jack/status/20','https://twitter.com/DaithiDeNogla/status/1389279286641692672']
+    tweets = []
+    tweets_list2 = []
+    movie_name = input("Enter movie name: ")
+    release_date = input("Enter release date: ")
+    params = movie_name + " lang:en since:" + release_date
+    for i, tweet in enumerate(sntwitter.TwitterSearchScraper(params).get_items()):
+        if i > 5000:
+            break
+        tweets_list2.append([tweet.date, tweet.content, tweet.id, tweet.likeCount, tweet.user.displayname, tweet.user.verified, tweet.user.followersCount,
+                            tweet.user.friendsCount, tweet.user.favouritesCount, tweet.user.statusesCount, tweet.user.location])
+    tweets_df2 = pd.DataFrame(tweets_list2, columns=['Datetime', 'Tweet', 'ID', 'likes_count', 'Username', 'verified', 'followers',
+                                                    'friends', 'favourites', 'statuses', 'location'])
+    tweets_df2.sort_values(by=["likes_count"], axis=0, ascending=False, inplace=True)
+    top10 = tweets_df2.head(10)
+    ids_list = top10['ID'].tolist()
+    for i in ids_list:
+        tweets.append('https://twitter.com/jack/status/'+str(i))
     movie.tweets = tweets
 
     return render(request, 'info.html', {'movie': movie})
