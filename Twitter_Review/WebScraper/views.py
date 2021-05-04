@@ -73,4 +73,7 @@ def fetchData(request):
     else:
         movie.trailer = "NA"
 
+    tweets = ['https://twitter.com/jack/status/20','https://twitter.com/DaithiDeNogla/status/1389279286641692672']
+    movie.tweets = tweets
+
     return render(request, 'info.html', {'movie': movie})

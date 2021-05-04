@@ -11,3 +11,4 @@ class Movie:
     wtw: str
     won: str
     trailer: str
+    tweets: list

@@ -11,8 +11,8 @@
     <title>Twitter Review</title>
     <style>
         body {
-            width:100vw; 
-            height: 500px; 
+            width: 100vw;
+            height: 500px;
             background-image: url('static/images/pic1.jpg');
             background-repeat: no-repeat;
             background-size: cover;
@@ -21,6 +21,7 @@
             overflow-x: hidden;
         }
     </style>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </head>
 
 <body>
@@ -59,6 +60,13 @@
                     <li class="list-group-item">Where to watch?: {{movie.wtw}}</li>
                     <li class="list-group-item">Should you watch?: {{movie.won}}</li>
                     <li class="list-group-item">Trailer: <a href="{{movie.trailer}}" class="link-primary">{{movie.trailer}}</a></li>
+                    {% for i in movie.tweets %}
+                        <li class="list-group-item">
+                            <blockquote class="twitter-tweet">
+                                <a href="{{i}}">May 3, 2021</a>
+                            </blockquote>
+                        </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
