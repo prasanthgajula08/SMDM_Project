@@ -6,6 +6,8 @@ import bs4
 import pandas as pd
 import os
 import snscrape.modules.twitter as sntwitter
+import nltk
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
 # Create your views here.
 
 
@@ -78,6 +80,10 @@ def fetchData(request):
 
     tweets = []
     tweets_list2 = []
+    sentiment = []
+    sentiments = []
+    nltk.download('vader_lexicon')
+    analyzer = SentimentIntensityAnalyzer()
     movie_name = input("Enter movie name: ")
     release_date = input("Enter release date: ")
     params = movie_name + " lang:en since:" + release_date
@@ -91,8 +97,24 @@ def fetchData(request):
     tweets_df2.sort_values(by=["likes_count"], axis=0, ascending=False, inplace=True)
     top10 = tweets_df2.head(10)
     ids_list = top10['ID'].tolist()
+    tweets_list = top10['Tweet'].tolist()
+    for i in tweets_list:
+        sentiment.append(analyzer.polarity_scores(i))
+    for i in sentiment:
+        sentiments.append(i['compound'])
+    movie.sentiments = sentiments
+
     for i in ids_list:
         tweets.append('https://twitter.com/jack/status/'+str(i))
     movie.tweets = tweets
+    sent_val1 = sum(sentiments)/10
+    movie.sent_val = round(((sent_val1+1)/2)*100)
+    
+    if movie.sent_val<40:
+        movie.review = "Negative"
+    elif movie.sent_val>=40 and movie.sent_val<70:
+        movie.review = "Neutral"
+    else:
+        movie.review = "Positive"
 
     return render(request, 'info.html', {'movie': movie})

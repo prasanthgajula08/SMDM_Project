@@ -12,3 +12,6 @@ class Movie:
     won: str
     trailer: str
     tweets: list
+    sentiments: list
+    sent_val: float
+    review: str
