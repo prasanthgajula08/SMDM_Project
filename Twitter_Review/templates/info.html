@@ -13,13 +13,17 @@
         body {
             width: 100vw;
             height: 500px;
-            background-image: url('static/images/pic1.jpg');
+            background-image: linear-gradient(
+                rgba(0, 0, 0, 0.7), 
+                rgba(0, 0, 0, 0.7)
+              ), url('static/images/pic1.jpg');
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
             max-width: 100%;
             overflow-x: hidden;
             background-attachment: fixed;
+            background-blend-mode: multiply;
         }
     </style>
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -47,21 +51,21 @@
         <div class="col-4">
             <div class="card" style="width: 50rem;">
                 <div class="card-body">
-                    <h5 class="card-title">{{movie.title}}</h5>
-                    <p class="card-text">Description: {{movie.desc}}</p>
-                    <a href="https://www.imdb.com/" class="btn btn-primary" style="margin: 5px;">IMDB_rating: {{movie.imdb}}</a>
-                    <span class="badge bg-secondary" style="margin: 5px; border:1px; padding: 6px 12px;">Twitter Rating: {{movie.sent_val}}% ({{movie.review}})</span>
+                    <h5 class="card-title"><b>{{movie.title}}</b></h5>
+                    <p class="card-text"><b>Description:</b> {{movie.desc}}</p>
+                    <a href="https://www.imdb.com/" class="btn btn-primary" style="margin: 5px;"><b>IMDB_rating:</b> {{movie.imdb}}</a>
+                    <span class="badge bg-secondary" style="margin: 5px; border:1px; padding: 6px 12px;"><b>Twitter Rating:</b> {{movie.sent_val}}% ({{movie.review}})</span>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Genre: {{movie.genre}}</li>
-                    <li class="list-group-item">Cast & Crew:
+                    <li class="list-group-item"><b>Genre:</b> {{movie.genre}}</li>
+                    <li class="list-group-item"><b>Cast & Crew:</b>
                         {% for i in movie.cnc %}
                         {{i}},
                         {% endfor %}
                         and others.</li>
-                    <li class="list-group-item">Where to watch?: {{movie.wtw}}</li>
-                    <li class="list-group-item">Should you watch?: {{movie.won}}</li>
-                    <li class="list-group-item">Trailer: <a href="{{movie.trailer}}" class="link-primary">{{movie.trailer}}</a></li>
+                    <li class="list-group-item"><b>Where to watch?:</b> {{movie.wtw}}</li>
+                    <li class="list-group-item"><b>Should you watch?:</b> {{movie.won}}</li>
+                    <li class="list-group-item"><b>Trailer:</b> <a href="{{movie.trailer}}" class="link-primary">{{movie.trailer}}</a></li>
                     {% for i in movie.tweets %}
                         <li class="list-group-item">
                             <blockquote class="twitter-tweet">

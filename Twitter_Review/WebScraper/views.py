@@ -23,7 +23,19 @@ def fetchData(request):
     html_code = requests.get(url)
     bs_code = bs4.BeautifulSoup(html_code.text, 'lxml')
 
-    title = searchedValue
+    rel_date = ""
+    new_search = ""
+    for i in searchedValue:
+        if i == '-':
+            new_search += " "
+        else:
+            if ord(i) >= 48 and ord(i) <= 57:
+                rel_date += i
+            else:
+                new_search += i
+    movie_name = new_search
+    release_date = rel_date + "-01-01"
+    title = movie_name
     movie.title = title
 
     images = bs_code.find_all("img", {"class": "css-1sz776d e1181ybh1"})
@@ -71,9 +83,9 @@ def fetchData(request):
         start = wtw.index("Watch on")
         end = wtw.index("|")
         movie.wtw = wtw[start:end]
-    
+
     trailer = bs_code.find_all("a", {"class": "css-zniopz e14injhv8"})
-    if len(trailer)>0:
+    if len(trailer) > 0:
         movie.trailer = trailer[0]['href']
     else:
         movie.trailer = "NA"
@@ -84,8 +96,6 @@ def fetchData(request):
     sentiments = []
     nltk.download('vader_lexicon')
     analyzer = SentimentIntensityAnalyzer()
-    movie_name = input("Enter movie name: ")
-    release_date = input("Enter release date: ")
     params = movie_name + " lang:en since:" + release_date
     for i, tweet in enumerate(sntwitter.TwitterSearchScraper(params).get_items()):
         if i > 5000:
@@ -93,8 +103,9 @@ def fetchData(request):
         tweets_list2.append([tweet.date, tweet.content, tweet.id, tweet.likeCount, tweet.user.displayname, tweet.user.verified, tweet.user.followersCount,
                             tweet.user.friendsCount, tweet.user.favouritesCount, tweet.user.statusesCount, tweet.user.location])
     tweets_df2 = pd.DataFrame(tweets_list2, columns=['Datetime', 'Tweet', 'ID', 'likes_count', 'Username', 'verified', 'followers',
-                                                    'friends', 'favourites', 'statuses', 'location'])
-    tweets_df2.sort_values(by=["likes_count"], axis=0, ascending=False, inplace=True)
+                                                     'friends', 'favourites', 'statuses', 'location'])
+    tweets_df2.sort_values(by=["likes_count"], axis=0,
+                           ascending=False, inplace=True)
     top10 = tweets_df2.head(10)
     ids_list = top10['ID'].tolist()
     tweets_list = top10['Tweet'].tolist()
@@ -109,10 +120,10 @@ def fetchData(request):
     movie.tweets = tweets
     sent_val1 = sum(sentiments)/10
     movie.sent_val = round(((sent_val1+1)/2)*100)
-    
-    if movie.sent_val<40:
+
+    if movie.sent_val < 40:
         movie.review = "Negative"
-    elif movie.sent_val>=40 and movie.sent_val<70:
+    elif movie.sent_val >= 40 and movie.sent_val < 70:
         movie.review = "Neutral"
     else:
         movie.review = "Positive"
