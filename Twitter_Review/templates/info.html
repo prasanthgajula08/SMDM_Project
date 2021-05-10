@@ -13,10 +13,8 @@
         body {
             width: 100vw;
             height: 500px;
-            background-image: linear-gradient(
-                rgba(0, 0, 0, 0.7), 
-                rgba(0, 0, 0, 0.7)
-              ), url('static/images/pic1.jpg');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7),
+                    rgba(0, 0, 0, 0.7)), url('static/images/pic1.jpg');
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
@@ -27,6 +25,46 @@
         }
     </style>
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {
+            'packages': ['geochart'],
+            // Note: you will need to get a mapsApiKey for your project.
+            // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+            'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+        });
+        google.charts.setOnLoadCallback(drawRegionsMap);
+
+        function drawRegionsMap() {
+            var data = google.visualization.arrayToDataTable([
+                ['Country', 'Popularity'],
+                ['{{movie.title}}', 200],
+                ['United States', 300],
+                ['Brazil', 400],
+                ['Canada', 500],
+                ['France', 600],
+                ['RU', 700]
+            ]);
+
+            var options = {};
+
+            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+            chart.draw(data, options);
+        }
+    </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -50,30 +88,83 @@
         </div>
         <div class="col-4">
             <div class="card" style="width: 50rem;">
-                <div class="card-body">
-                    <h5 class="card-title"><b>{{movie.title}}</b></h5>
-                    <p class="card-text"><b>Description:</b> {{movie.desc}}</p>
-                    <a href="https://www.imdb.com/" class="btn btn-primary" style="margin: 5px;"><b>IMDB_rating:</b> {{movie.imdb}}</a>
-                    <span class="badge bg-secondary" style="margin: 5px; border:1px; padding: 6px 12px;"><b>Twitter Rating:</b> {{movie.sent_val}}% ({{movie.review}})</span>
+                <div id="accordion">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+                                    aria-expanded="true" aria-controls="collapseOne">
+                                    Movie Info
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                            data-parent="#accordion">
+                            <div class="card-body">
+                                <h5 class="card-title"><b>{{movie.title}}</b></h5>
+                                <p class="card-text"><b>Description:</b> {{movie.desc}}</p>
+                                <a href="https://www.imdb.com/" class="btn btn-primary"
+                                    style="margin: 5px;"><b>IMDB_rating:</b>
+                                    {{movie.imdb}}</a>
+                                <span class="badge bg-secondary"
+                                    style="margin: 5px; border:1px; padding: 6px 12px;"><b>Twitter
+                                        Rating:</b> {{movie.sent_val}}% ({{movie.review}})</span>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><b>Genre:</b> {{movie.genre}}</li>
+                                <li class="list-group-item"><b>Cast & Crew:</b>
+                                    {% for i in movie.cnc %}
+                                    {{i}},
+                                    {% endfor %}
+                                    and others.</li>
+                                <li class="list-group-item"><b>Where to watch?:</b> {{movie.wtw}}</li>
+                                <li class="list-group-item"><b>Should you watch?:</b> {{movie.won}}</li>
+                                <li class="list-group-item"><b>Trailer:</b> <a href="{{movie.trailer}}"
+                                        class="link-primary">{{movie.trailer}}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingTwo">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                                    aria-expanded="false" aria-controls="collapseTwo">
+                                    Popular Tweets
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                            <div class="card-body">
+                                <ul>
+                                    {% for i in movie.tweets %}
+                                    <li class="list-group-item">
+                                        <blockquote class="twitter-tweet">
+                                            <a href="{{i}}"></a>
+                                        </blockquote>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingThree">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse"
+                                    data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Which countries are talking about this?
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                            data-parent="#accordion">
+                            <div class="card-body">
+                                <div id="regions_div" style="width: 500px; height: 700px;"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><b>Genre:</b> {{movie.genre}}</li>
-                    <li class="list-group-item"><b>Cast & Crew:</b>
-                        {% for i in movie.cnc %}
-                        {{i}},
-                        {% endfor %}
-                        and others.</li>
-                    <li class="list-group-item"><b>Where to watch?:</b> {{movie.wtw}}</li>
-                    <li class="list-group-item"><b>Should you watch?:</b> {{movie.won}}</li>
-                    <li class="list-group-item"><b>Trailer:</b> <a href="{{movie.trailer}}" class="link-primary">{{movie.trailer}}</a></li>
-                    {% for i in movie.tweets %}
-                        <li class="list-group-item">
-                            <blockquote class="twitter-tweet">
-                                <a href="{{i}}"></a>
-                            </blockquote>
-                        </li>
-                    {% endfor %}
-                </ul>
             </div>
         </div>
     </div>

@@ -8,6 +8,7 @@ import os
 import snscrape.modules.twitter as sntwitter
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from collections import Counter
 # Create your views here.
 
 
@@ -94,6 +95,9 @@ def fetchData(request):
     tweets_list2 = []
     sentiment = []
     sentiments = []
+    top5locs = []
+    top5locs1 = []
+
     nltk.download('vader_lexicon')
     analyzer = SentimentIntensityAnalyzer()
     params = movie_name + " lang:en since:" + release_date
@@ -127,5 +131,15 @@ def fetchData(request):
         movie.review = "Neutral"
     else:
         movie.review = "Positive"
+    
+    Conter = Counter(tweets_df2['location'])
+    top5locs1 = Conter.most_common(5)
+    for i in range(len(top5locs1)):
+        if i < 5:
+            top5locs.append((top5locs1[i][0]))
+        else:
+            break
+    movie.locations = top5locs
+    print(movie.locations)
 
     return render(request, 'info.html', {'movie': movie})
