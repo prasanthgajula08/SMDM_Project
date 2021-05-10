@@ -15,4 +15,15 @@ class Movie:
     sentiments: list
     sent_val: float
     review: str
-    locations: list
+    con1: str
+    con2: str
+    con3: str
+    con4: str
+    con5: str
+    val1: int
+    val2: int
+    val3: int
+    val4: int
+    val5: int
+    verif: int
+    normal: int

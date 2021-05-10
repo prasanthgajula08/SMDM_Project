@@ -9,6 +9,7 @@ import snscrape.modules.twitter as sntwitter
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from collections import Counter
+import pycountry as pc
 # Create your views here.
 
 
@@ -97,6 +98,10 @@ def fetchData(request):
     sentiments = []
     top5locs = []
     top5locs1 = []
+    top5vals = []
+    countries = []
+    count_ver = 0
+    count_norm = 0
 
     nltk.download('vader_lexicon')
     analyzer = SentimentIntensityAnalyzer()
@@ -132,14 +137,33 @@ def fetchData(request):
     else:
         movie.review = "Positive"
     
-    Conter = Counter(tweets_df2['location'])
+    for i in range(len(list(pc.countries))):
+        countries.append(list(pc.countries)[i].name)
+    for j in tweets_df2['location']:
+        if j in countries:
+            top5locs1.append(j)
+    Conter = Counter(top5locs1)
     top5locs1 = Conter.most_common(5)
-    for i in range(len(top5locs1)):
-        if i < 5:
-            top5locs.append((top5locs1[i][0]))
-        else:
-            break
-    movie.locations = top5locs
-    print(movie.locations)
+    for k in range(len(top5locs1)):
+        top5locs.append(top5locs1[k][0])
+        top5vals.append(top5locs1[k][1])
+    movie.con1 = top5locs[0]
+    movie.con2 = top5locs[1]
+    movie.con3 = top5locs[2]
+    movie.con4 = top5locs[3]
+    movie.con5 = top5locs[4]
+    movie.val1 = top5vals[0]
+    movie.val2 = top5vals[1]
+    movie.val3 = top5vals[2]
+    movie.val4 = top5vals[3]
+    movie.val5 = top5vals[4]
 
+    for i in tweets_df2['verified']:
+        if i==True:
+            count_ver += 1
+        else:
+            count_norm += 1
+    movie.verif = count_ver
+    movie.normal = count_norm
+    print(movie.verif)
     return render(request, 'info.html', {'movie': movie})

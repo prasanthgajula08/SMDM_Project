@@ -38,12 +38,11 @@
         function drawRegionsMap() {
             var data = google.visualization.arrayToDataTable([
                 ['Country', 'Popularity'],
-                ['{{movie.title}}', 200],
-                ['United States', 300],
-                ['Brazil', 400],
-                ['Canada', 500],
-                ['France', 600],
-                ['RU', 700]
+                ['{{movie.con1}}', parseInt('{{movie.val1}}')],
+                ['{{movie.con2}}', parseInt('{{movie.val2}}')],
+                ['{{movie.con3}}', parseInt('{{movie.val3}}')],
+                ['{{movie.con4}}', parseInt('{{movie.val4}}')],
+                ['{{movie.con5}}', parseInt('{{movie.val5}}')]
             ]);
 
             var options = {};
@@ -51,6 +50,28 @@
             var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
 
             chart.draw(data, options);
+        }
+    </script>
+    <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var veri = '{{movie.verif}}'
+            var nor = '{{movie.normal}}'
+            console.log(veri)
+          var data = google.visualization.arrayToDataTable([
+                ['User type', 'No of users'],
+                ['Non-Verified Users', parseInt(nor)],
+                ['Verified Users', parseInt(veri)]
+          ]);
+  
+          var options = {
+            pieHole: 0.4,
+            sliceVisibilityThreshold: .0001,
+          };
+  
+          var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+          chart.draw(data, options);
         }
     </script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -160,7 +181,22 @@
                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
                             data-parent="#accordion">
                             <div class="card-body">
-                                <div id="regions_div" style="width: 500px; height: 700px;"></div>
+                                <div id="regions_div" style="width: 500px; height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingFour">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse"
+                                    data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    What is influencer hand in this topic?
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                            <div class="card-body">
+                                <div id="donutchart"></div>
                             </div>
                         </div>
                     </div>
