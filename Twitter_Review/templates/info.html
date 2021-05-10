@@ -58,7 +58,6 @@
         function drawChart() {
             var veri = '{{movie.verif}}'
             var nor = '{{movie.normal}}'
-            console.log(veri)
           var data = google.visualization.arrayToDataTable([
                 ['User type', 'No of users'],
                 ['Non-Verified Users', parseInt(nor)],
@@ -71,6 +70,31 @@
           };
   
           var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+          chart.draw(data, options);
+        }
+    </script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+  
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable([
+            ['Year', 'No of tweets'],
+            ['2017',  parseInt('{{movie.year1}}')],
+            ['2018',  parseInt('{{movie.year2}}')],
+            ['2019',  parseInt('{{movie.year3}}')],
+            ['2020',  parseInt('{{movie.year4}}')],
+            ['2021',  parseInt('{{movie.year5}}')]
+          ]);
+  
+          var options = {
+            title: 'Company Performance',
+            curveType: 'function',
+            legend: { position: 'bottom' }
+          };
+  
+          var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+  
           chart.draw(data, options);
         }
     </script>
@@ -197,6 +221,21 @@
                         <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
                             <div class="card-body">
                                 <div id="donutchart"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingFive">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse"
+                                    data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                    Last five years trend (No of tweets)
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                            <div class="card-body">
+                                <div id="curve_chart"></div>
                             </div>
                         </div>
                     </div>

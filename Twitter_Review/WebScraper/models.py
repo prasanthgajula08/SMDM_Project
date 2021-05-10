@@ -27,3 +27,8 @@ class Movie:
     val5: int
     verif: int
     normal: int
+    year1: int
+    year2: int
+    year3: int
+    year4: int
+    year5: int

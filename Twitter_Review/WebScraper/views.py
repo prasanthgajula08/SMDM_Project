@@ -102,12 +102,15 @@ def fetchData(request):
     countries = []
     count_ver = 0
     count_norm = 0
+    year_count = 0
+    yearly_tweets = []
+    new_yearly_list = []
 
     nltk.download('vader_lexicon')
     analyzer = SentimentIntensityAnalyzer()
     params = movie_name + " lang:en since:" + release_date
     for i, tweet in enumerate(sntwitter.TwitterSearchScraper(params).get_items()):
-        if i > 5000:
+        if i > 100000:
             break
         tweets_list2.append([tweet.date, tweet.content, tweet.id, tweet.likeCount, tweet.user.displayname, tweet.user.verified, tweet.user.followersCount,
                             tweet.user.friendsCount, tweet.user.favouritesCount, tweet.user.statusesCount, tweet.user.location])
@@ -165,5 +168,42 @@ def fetchData(request):
             count_norm += 1
     movie.verif = count_ver
     movie.normal = count_norm
-    print(movie.verif)
+
+    for i in range(int(rel_date),2022):
+        for j in tweets_df2['Datetime']:
+            if i == j.year:
+                year_count += 1
+        yearly_tweets.append(year_count)
+        year_count = 0
+    if len(yearly_tweets)>=5:
+        new_yearly_list = yearly_tweets[-5:]
+        movie.year1 = new_yearly_list[0]
+        movie.year2 = new_yearly_list[1]
+        movie.year3 = new_yearly_list[2]
+        movie.year4 = new_yearly_list[3]
+        movie.year5 = new_yearly_list[4]
+    elif len(yearly_tweets)==4:
+        movie.year1 = 0
+        movie.year2 = yearly_tweets[0]
+        movie.year3 = yearly_tweets[1]
+        movie.year4 = yearly_tweets[2]
+        movie.year5 = yearly_tweets[3]
+    elif len(yearly_tweets)==3:
+        movie.year1 = 0
+        movie.year2 = 0
+        movie.year3 = yearly_tweets[0]
+        movie.year4 = yearly_tweets[1]
+        movie.year5 = yearly_tweets[2]
+    elif len(yearly_tweets)==2:
+        movie.year1 = 0
+        movie.year2 = 0
+        movie.year3 = 0
+        movie.year4 = yearly_tweets[0]
+        movie.year5 = yearly_tweets[1]
+    else:
+        movie.year1 = 0
+        movie.year2 = 0
+        movie.year3 = 0
+        movie.year4 = 0
+        movie.year5 = yearly_tweets[0]
     return render(request, 'info.html', {'movie': movie})
