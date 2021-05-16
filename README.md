@@ -1,7 +1,7 @@
 # SMDM_Project
 This website allows users to know the review of a movie based on the sentiment of people on twitter platform
 
-#Setup (Includes version requirements and instructions to install)
+## Setup (Includes version requirements and instructions to install)
 * python (version 3.9.1 or above) 
   ```
   Dowload from this link https://www.python.org/downloads/
@@ -32,7 +32,7 @@ This website allows users to know the review of a movie based on the sentiment o
   $pip install pycountry
   ```
   
-#Instructions to run
+## Instructions to run
 * Move to Twitter_Review directory
   ```
   cd Twitter_Review
@@ -46,10 +46,10 @@ This website allows users to know the review of a movie based on the sentiment o
 * Select the movie that you searched for and then copy the string taht is after reelgood.com/ which is present in the url.
 * Come back to local host tab and paste that string in the search box of our website and hit search.
 
-#Notes
+## Notes
 * The number of tweets on which the website is gonna perform sentiment analysis is set to 100000 by default.
 * To change that number you need to manually go to SMDM_Project/Twitter_Review/WebScraper/views.py and replace the number 100000 (on line numbers 126 and 147) with whatever number you wish to perform analysis on.
 
-#Runtime
+## Runtime
 * For 100000 tweets collected it takes approximately 18 mins
 * For 5000 tweets collected it takes approximately 1 min
