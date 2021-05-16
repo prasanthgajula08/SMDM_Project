@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<!--html for navbar and search bar on home page-->
+<!--Nav Bar-->
 <nav class="navbar navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand">People's Review</a>
     <form action="info" method="post" class="d-flex">
       {% csrf_token %}
+      <!--Search field-->
       <input class="form-control me-2" type="search" name="searchValue" placeholder="Search" aria-label="Search">
+      <!--Search Button-->
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
   </div>
