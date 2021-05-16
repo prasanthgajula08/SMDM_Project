@@ -1,33 +1,55 @@
 # SMDM_Project
-This website allows users to view the review of a movie or TV series based on the sentiment of people on twitter platform
+This website allows users to know the review of a movie based on the sentiment of people on twitter platform
 
 #Setup (Includes version requirements and instructions to install)
-* python (3.9.1 or above) 
+* python (version 3.9.1 or above) 
   ```
   Dowload from this link https://www.python.org/downloads/
   ```
-* pip (21..1.1 or above)
-* django (2.1.1 or above) 
+* pip (version 21..1.1 or above)
+* django (version 2.1.1 or above) 
   ```
   $pip install django
   ```
-* requests (2.25.1 or above) 
+* requests (version 2.25.1 or above) 
   ```
   $pip install requests
   ```
-* pandas (1.2.4 or above) 
+* pandas (version 1.2.4 or above) 
   ```
   $pip install pandas
   ```
-* snscrape (0.3.5.dev104+g97c8cae or above) 
+* snscrape (version 0.3.5.dev104+g97c8cae or above) 
   ```
   $pip install git+https://github.com/JustAnotherArchivist/snscrape.git
   ```
-* nltk (3.6.2 or above) 
+* nltk (version 3.6.2 or above) 
   ```
   $pip install nltk
   ```
-* pycountry (20.7.3 or above) 
+* pycountry (version 20.7.3 or above) 
   ```
   $pip install pycountry
   ```
+  
+#Instructions to run
+* Move to Twitter_Review directory
+  ```
+  cd Twitter_Review
+  ```
+* Enter this command
+  ```
+  python manage.py runserver
+  ```
+* Open browser and go to local host "127.0.0.1:8000"
+* Now go to "reelgood.com" on other tab and search for the movie that you want review for.
+* Select the movie that you searched for and then copy the string taht is after reelgood.com/ which is present in the url.
+* Come back to local host tab and paste that string in the search box of our website and hit search.
+
+#Notes
+* The number of tweets on which the website is gonna perform sentiment analysis is set to 100000 by default.
+* To change that number you need to manually go to SMDM_Project/Twitter_Review/WebScraper/views.py and replace the number 100000 (on line numbers 126 and 147) with whatever number you wish to perform analysis on.
+
+#Runtime
+* For 100000 tweets collected it takes approximately 18 mins
+* For 5000 tweets collected it takes approximately 1 min
