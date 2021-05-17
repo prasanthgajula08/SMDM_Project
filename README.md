@@ -19,7 +19,7 @@ This website allows users to know the review of a movie based on the sentiment o
   ```
   $pip install pandas
   ```
-* Git (version 2.26.0.windows.1 or more)
+* Git (version 2.26.0.windows.1 or above)
   ```
   Download from this link https://git-scm.com/download/win
   ```
