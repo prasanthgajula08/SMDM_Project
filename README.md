@@ -19,6 +19,10 @@ This website allows users to know the review of a movie based on the sentiment o
   ```
   $pip install pandas
   ```
+* Git (version 2.26.0.windows.1 or more)
+  ```
+  Download from this link https://git-scm.com/download/win
+  ```
 * snscrape (version 0.3.5.dev104+g97c8cae or above) 
   ```
   $pip install git+https://github.com/JustAnotherArchivist/snscrape.git
@@ -49,6 +53,8 @@ This website allows users to know the review of a movie based on the sentiment o
 ## Notes
 * The number of tweets on which the website is gonna perform sentiment analysis is set to 100000 by default.
 * To change that number you need to manually go to SMDM_Project/Twitter_Review/WebScraper/views.py and replace the number 100000 (on line numbers 126 and 147) with whatever number you wish to perform analysis on.
+* All the setup instructions are for windows operating system.
+* For better viewing experience of the webpage set scale to 100% in your system display settings.
 
 ## Runtime
 * For 100000 tweets collected it takes approximately 18 mins
