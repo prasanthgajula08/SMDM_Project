@@ -1,5 +1,6 @@
 # SMDM_Project
-This website allows users to know the review of a movie based on the sentiment of people on twitter platform
+* This website allows users to know the review of a movie based on the sentiment of people on twitter platform
+* Code is available at https://github.com/prasanthgajula08/SMDM_Project
 
 ## Setup (Includes version requirements and instructions to install)
 * python (version 3.9.1 or above) 
