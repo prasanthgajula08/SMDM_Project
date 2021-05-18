@@ -37,7 +37,7 @@
   $pip install pycountry
   ```
   
-## Instructions to run
+## Instructions to run (WebPage)
 * Move to Twitter_Review directory
   ```
   cd Twitter_Review
@@ -50,6 +50,10 @@
 * Now go to "reelgood.com" on other tab and search for the movie that you want review for.
 * Select the movie that you searched for and then copy the string taht is after reelgood.com/ which is present in the url.
 * Come back to local host tab and paste that string in the search box of our website and hit search.
+
+## Evaluation results
+* Upload SMDM.ipynb file and Ave_endGame1.xlsx file in jupyter notebook.
+* Open SMDM.ipynb file you can find the accuray score at Out[382]
 
 ## Notes
 * The number of tweets on which the website is gonna perform sentiment analysis is set to 100000 by default.
