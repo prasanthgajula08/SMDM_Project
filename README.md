@@ -54,6 +54,8 @@
 ## Evaluation results
 * Upload SMDM.ipynb file and Ave_endGame1.xlsx file in jupyter notebook.
 * Open SMDM.ipynb file you can find the accuray score at Out[382]
+or
+* Follow this link https://github.com/prasanthgajula08/SMDM_Project/blob/main/SMDM.ipynb
 
 ## Notes
 * The number of tweets on which the website is gonna perform sentiment analysis is set to 100000 by default.
